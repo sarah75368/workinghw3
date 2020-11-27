@@ -2,8 +2,6 @@ package map;
 
 import java.util.HashMap;
 import java.util.Iterator;
-
-import common.Console;
 import common.Observer;
 import locations.*;
 import persons.*;
@@ -21,7 +19,8 @@ public class Map implements Observer<String>{
 	Location loc;
 	Harry harry = new Harry();
 	Entrance en = new Entrance();
-	public Map() {
+	private static Map instance;
+	private Map() {
 		map.put(her,lib);
 		map.put(dc,lib);
 		map.put(sp,pc);
@@ -29,7 +28,12 @@ public class Map implements Observer<String>{
 		//original location of harry
 		map.put(harry, en);
 	}
-
+	public static synchronized Map getInstance(){
+		if(instance == null){
+		instance = new Map();
+		}
+		 return instance;
+		}
 
 	public void updateMap(Person person, Location location) {	
 		map.replace(person, location);
@@ -49,6 +53,7 @@ public class Map implements Observer<String>{
 	}
 	@Override
 	public void update(String data) {
+		if(data.contains("north") || data.contains("east") || data.contains("west")) {
 		if (data.contains("north")) {
 			loc =  new DiningHall();
 			}
@@ -60,8 +65,10 @@ public class Map implements Observer<String>{
 	}
 		updateMap(harry,loc);
 		Person p = loc.present();
+		loc.look();
 		p.interact(harry);
 		harry.interact(p);
 		remove(p,loc);
 	}
+}
 }

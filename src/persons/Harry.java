@@ -6,7 +6,7 @@ import potions.*;
 import states.*;
 import watch.*;
 import locations.*;
-public class Harry extends Subject<State<Harry>> implements Runnable, Person, Appearance<Harry> {
+public class Harry extends Subject<State<Harry>> implements Runnable, Person, Appearance<Harry>, Observer<String> {
 	
 	Wand wand = new Wand();
 	ExpectoPatronum exp = new ExpectoPatronum(wand);
@@ -18,8 +18,10 @@ public class Harry extends Subject<State<Harry>> implements Runnable, Person, Ap
 	Watch w;
 	State<Harry> state;
 	Location l;
+	int potions = 0;
 	Reader reader= new Reader();
-	public Harry() {	
+	public Harry() {
+		addObserver(new Hermione());
 		Thread t = new Thread(this);
 		t.start();
 	}
@@ -52,6 +54,31 @@ public class Harry extends Subject<State<Harry>> implements Runnable, Person, Ap
 	@Override
 	public void run() {
 		w = new Watch();
+		if(potions == 2)	
+		notifyObservers(getState());
 		
+	}
+	@Override
+	public void update(String data) {
+		Potion p;
+		if(data.contains("make")) {
+			while(potions !=2) {
+			if(data.contains("polyjuice")) {
+				p = new PolyjuicePotion();
+				p.PreparePotion();
+				potions++;
+				state = new Changed();
+				setState(state);
+			}
+			else if(data.contains("invisibility")) {
+				p = new InvisibilityPotion();
+				p.PreparePotion();
+				potions++;
+				state = new Invisible();
+				setState(state);
+			}
+			System.out.println("Remember you need 2 potions!");
+		}
+	}
 	}
 }

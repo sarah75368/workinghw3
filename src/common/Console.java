@@ -2,14 +2,19 @@ package common;
 import java.util.Arrays;
 
 import map.Map;
+import persons.Harry;
 public class Console extends Subject<String> implements Runnable{
 	Reader reader = new Reader();
 	boolean flag;
 	String input;
-	Map map = new Map();
-	String [] commands = { "leave", "exit", "walk", "get out", "expelliarmus","expecto patronum","protego","stupefy" };
+	Map map = Map.getInstance();
+	Harry harry = new Harry();
+	String [] commands = { "leave", "exit", "walk", "expelliarmus","expecto patronum","protego","stupefy","make"};
+	String [] move = {"leave", "exit", "walk", "get out"};
+	String [] locations = {"north","east","west"};
 	public Console(){
 		addObserver(map);
+		addObserver(harry);
 		Thread t = new Thread(this);
 		t.start();
 	}
@@ -37,19 +42,36 @@ public class Console extends Subject<String> implements Runnable{
 			System.out.println("That is not a valid command!");
 			input = reader.nextLine();
 		}
-		while(!input.contains("west") &&!input.contains("east")&&!input.contains("north")) {
-			System.out.println("You cannot go there!");
-			input = reader.nextLine();
-		}
+//		if(countWords(input) == 1)
+//		if(useList(move,input) && !validlocation(locations,input)) {
+//			System.out.println("You cannot go there!");
+//		}
 		if(input.contains("mischief managed")) {
 			flag = false;
 		}
+		input = input.toLowerCase();
 		return input;
 	}
+	/**
+	 * helper functions*
+	 * 
+	 * */
 	public static boolean useList(String[] arr, String targetValue) {
 		String[] temp = targetValue.split(" ");
 		return Arrays.asList(arr).contains(temp[0]);
 	}
+	public static boolean validlocation(String[] arr, String targetValue) {
+		String[] temp = targetValue.split(" ");
+		return Arrays.asList(arr).contains(temp[1]);
+	}
+	  public static int 
+      countWords(String str) 
+    { 
+        if (str == null || str.isEmpty()) 
+            return 0;
+        String[] words = str.split("\\s+"); 
+        return words.length; 
+    } 
 	public void run() {
 		welcome();
 		while(true) {
@@ -58,4 +80,3 @@ public class Console extends Subject<String> implements Runnable{
 		}
 	}
 }
-
