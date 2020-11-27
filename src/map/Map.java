@@ -1,6 +1,7 @@
 package map;
 
 import java.util.HashMap;
+import java.util.Iterator;
 
 import common.Console;
 import common.Observer;
@@ -36,6 +37,16 @@ public class Map implements Observer<String>{
 	public Location getLocation(Person person) {
 		return map.get(person);
 	}
+	public void remove(Person person, Location location) {
+		Iterator<Person> iterator = map.keySet().iterator(); 
+		while(iterator.hasNext()){
+			Person p = iterator.next();
+			if(p.getClass() == person.getClass()){ 
+				iterator.remove(); 
+				}
+
+		}
+	}
 	@Override
 	public void update(String data) {
 		if (data.contains("north")) {
@@ -51,5 +62,6 @@ public class Map implements Observer<String>{
 		Person p = loc.present();
 		p.interact(harry);
 		harry.interact(p);
+		remove(p,loc);
 	}
 }

@@ -2,6 +2,7 @@ package persons;
 
 
 public class Bellatrix extends Villian {
+
 	public Bellatrix() {
 		super("Bellatrix");
 	}

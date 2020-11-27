@@ -18,7 +18,6 @@ public class Harry extends Subject<State<Harry>> implements Runnable, Person, Ap
 	Watch w;
 	State<Harry> state;
 	Location l;
-	boolean villiandefeated = false;
 	Reader reader= new Reader();
 	public Harry() {	
 		Thread t = new Thread(this);
@@ -27,10 +26,8 @@ public class Harry extends Subject<State<Harry>> implements Runnable, Person, Ap
 	public void interact(Person person) {
 		if(person.getClass() == Hermione.class)
 			System.out.println("I found Hermione!");
-		else if(person.getClass() ==Villian.class)
-			
+		else
 			attack();
-			villiandefeated = true;
 	}
 	@Override
 	public void setState(State<Harry> state) {
