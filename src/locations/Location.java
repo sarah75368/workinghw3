@@ -2,7 +2,9 @@ package locations;
 import java.util.Arrays;
 
 import common.Reader;
+import persons.Person;
 public abstract class Location {
+	Person P;
 	public String[] commands = new String[4];
 	public String room;
 	Reader reader = new Reader();
@@ -30,7 +32,9 @@ public abstract class Location {
 		}
 		return next;
 	}
-
+	public Person present() {
+		return P;
+	}
 	public void greeting() {
 		System.out.println("You enter the " + room);
 	}

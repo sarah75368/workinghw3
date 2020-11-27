@@ -8,7 +8,7 @@ public class Snape extends Villian{
 	@Override
 	public void interact(Person person) {
 		if(person.getClass() == Harry.class)
-		System.out.println("Well well if it isn't Harry Potter, get ready to fight for your life!");
+		System.out.println(name + ": Well well if it isn't Harry Potter, get ready to fight for your life!");
 		
 	}
 

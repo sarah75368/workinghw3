@@ -1,7 +1,5 @@
 package persons;
 
-import common.*;
-
 public abstract class Villian implements Person {
 	String name;
 	boolean defeated;
@@ -9,7 +7,6 @@ public abstract class Villian implements Person {
 	Villian(String name) {
 		this.name = name;
 	}
-	
 	
 	void implement(Person person) {
 		if(person.getClass() == Harry.class)

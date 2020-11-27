@@ -1,7 +1,7 @@
 package locations;
 
 public class Entrance extends Location {
-	Entrance(){
+	public Entrance(){
 		super("Entrance");
 	}
 	public void entrance() {

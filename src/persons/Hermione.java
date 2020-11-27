@@ -4,7 +4,7 @@ import common.Observer;
 import locations.*;
 import map.Map;
 
-public class Hermione implements Person, Runnable,Observer<Map>{
+public class Hermione implements Person, Runnable, Observer<Harry>{
 
 	Location l;
 	public Hermione(){}
@@ -19,7 +19,7 @@ public class Hermione implements Person, Runnable,Observer<Map>{
 		System.out.println("Harry I am here!");
 	}
 	@Override
-	public void update(Map data) {	
-		l = data.getLocation(new Harry());
+	public void update(Harry data) {
+		interact(data);
 	}
 }

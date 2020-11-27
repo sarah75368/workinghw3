@@ -9,37 +9,47 @@ import persons.*;
 
 public class Map implements Observer<String>{
 
-	HashMap<Person, Location> map;
-	Location location;
+	HashMap<Person,Location> map = new HashMap<Person,Location>();
+	Hermione her = new Hermione();
+	Library lib = new Library();
+	Snape sp = new Snape();
+	PotionsClass pc = new PotionsClass();
+	Draco dc = new Draco();
+	Bellatrix bel = new Bellatrix();
+	DiningHall dh = new DiningHall();
+	Location loc;
+	Harry harry = new Harry();
+	Entrance en = new Entrance();
 	public Map() {
-		//map.put(new Hermione(), new Library());
+		map.put(her,lib);
+		map.put(dc,lib);
+		map.put(sp,pc);
+		map.put(bel,dh);	
+		//original location of harry
+		map.put(harry, en);
 	}
 
-	public void addToMap(Person person, Location location) {
-		map.put(person, location);
-	}
 
-	public void updateMap(Person person, Location location) {
-		if(map.containsKey(person)) {
-			map.remove(person);
-		}
-		map.put(person, location);
+	public void updateMap(Person person, Location location) {	
+		map.replace(person, location);
 	}
-
 	public Location getLocation(Person person) {
 		return map.get(person);
-
 	}
 	@Override
 	public void update(String data) {
 		if (data.contains("north")) {
-			location =  new DiningHall();
+			loc =  new DiningHall();
 			}
 		else if (data.contains("east")) {
-			location = new PotionsClass();
+			loc = new PotionsClass();
 		}
 		else if (data.contains("west")) {
-			location =  new Library();
+			loc =  new Library();
 	}
+		updateMap(harry,loc);
+		Person p = loc.present();
+		p.interact(harry);
+		harry.interact(p);
 	}
 }
