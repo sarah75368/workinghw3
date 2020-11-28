@@ -29,8 +29,11 @@ public class Harry extends Subject<State<Harry>> implements Runnable, Person, Co
 	}
 	@Override
 	public void interact(Person person) {
-		if(person.getClass() == Hermione.class)
+		if(person.getClass() == Hermione.class) {
+			Hermione her = (Hermione) person;
+			if(her.found)
 			System.out.println("I found Hermione!");
+		}
 		else
 			villian = (Villian) person;
 			attack();
@@ -59,9 +62,11 @@ public class Harry extends Subject<State<Harry>> implements Runnable, Person, Co
 	}
 	@Override
 	public void run() {
-		w = new Watch();
+		w = new Watch();	
+		while(true) {
 		if(ppotions == 2 || ipotions ==2)	
 		notifyObservers(getState());		
+	}
 	}
 	@Override
 	public void update(String data) {
@@ -71,16 +76,20 @@ public class Harry extends Subject<State<Harry>> implements Runnable, Person, Co
 				p = new PolyjuicePotion();
 				p.PreparePotion();
 				ppotions++;
+				if(ppotions ==2) {
 				state = new Changed();
 				setState(state);
+				}
 				System.out.println("You now have " +ppotions + " flasks of Polyjuice Potion");
 			}
 			else if(data.contains("invisibility")) {
 				p = new InvisibilityPotion();
 				p.PreparePotion();
 				ipotions++;
+				if(ipotions ==2) {
 				state = new Invisible();
 				setState(state);
+				}
 				System.out.println("You now have " +ipotions + " flasks of Invisibility Potion");
 			}
 	}

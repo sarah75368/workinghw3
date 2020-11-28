@@ -28,7 +28,7 @@ public class Hermione implements Person, Runnable, Observer<State<Harry>>{
 	@Override
 	public void update(State<Harry> data) {
 		state = (Harry) data;
-		if(state.getState().equals(new Changed()) || state.getState().equals(new Invisible())) {
+		if(state.getState() instanceof Changed || state.getState() instanceof Invisible) {
 			CanBeFound = true;
 		}
 	}

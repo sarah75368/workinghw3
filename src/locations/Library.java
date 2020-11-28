@@ -1,19 +1,22 @@
 package locations;
 
 import persons.*;
+import states.Alive;
 
 public class Library extends Location {
-	Person v = new Draco();
-	
+	Villian villian = new Draco();
+	Person h = (Hermione) new Hermione();
 	public Library() {
 		super("Library");
 	}
 
-	public void look_l() {
+	public void look() {
 		System.out.println("Once the academic year starts, students spend a lot of their time in the school library.");
-
 	}
 	public Person present() {
-		return v;
+		if(villian.getstate() instanceof Alive)
+		return villian;
+		else
+			return h;
 	}
 }
