@@ -10,7 +10,7 @@ public class Console extends Subject<String> implements Runnable{
 	Map map = Map.getInstance();
 	Harry harry = new Harry();
 	String [] commands = { "leave", "exit", "walk", "expelliarmus","expecto patronum","protego","stupefy","make"};
-	String [] move = {"leave", "exit", "walk", "get out"};
+	String [] move = {"leave", "exit","get out"};
 	String [] locations = {"north","east","west"};
 	public Console(){
 		addObserver(map);
@@ -46,6 +46,9 @@ public class Console extends Subject<String> implements Runnable{
 //		if(useList(move,input) && !validlocation(locations,input)) {
 //			System.out.println("You cannot go there!");
 //		}
+		if(leaving(move,input)) {
+			input = "leaving";
+		}
 		if(input.contains("mischief managed")) {
 			flag = false;
 		}
@@ -60,9 +63,8 @@ public class Console extends Subject<String> implements Runnable{
 		String[] temp = targetValue.split(" ");
 		return Arrays.asList(arr).contains(temp[0]);
 	}
-	public static boolean validlocation(String[] arr, String targetValue) {
-		String[] temp = targetValue.split(" ");
-		return Arrays.asList(arr).contains(temp[1]);
+	public static boolean leaving(String[] arr, String targetValue) {
+		return Arrays.asList(arr).contains(targetValue);
 	}
 	  public static int 
       countWords(String str) 

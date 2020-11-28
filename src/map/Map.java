@@ -9,24 +9,24 @@ import persons.*;
 public class Map implements Observer<String>{
 
 	HashMap<Person,Location> map = new HashMap<Person,Location>();
-	Hermione her = new Hermione();
-	Library lib = new Library();
-	Snape sp = new Snape();
-	PotionsClass pc = new PotionsClass();
-	Draco dc = new Draco();
-	Bellatrix bel = new Bellatrix();
-	DiningHall dh = new DiningHall();
+	Hermione hermione = new Hermione();
+	Library library = new Library();
+	Snape snape = new Snape();
+	PotionsClass potionsclass = new PotionsClass();
+	Draco draco = new Draco();
+	Bellatrix bellatrix = new Bellatrix();
+	DiningHall dininghall = new DiningHall();
 	Location loc;
 	Harry harry = new Harry();
-	Entrance en = new Entrance();
+	Entrance entrance = new Entrance();
 	private static Map instance;
 	private Map() {
-		map.put(her,lib);
-		map.put(dc,lib);
-		map.put(sp,pc);
-		map.put(bel,dh);	
+		map.put(hermione,library);
+		map.put(draco,library);
+		map.put(snape,potionsclass);
+		map.put(bellatrix,dininghall);	
 		//original location of harry
-		map.put(harry, en);
+		map.put(harry, entrance);
 	}
 	public static synchronized Map getInstance(){
 		if(instance == null){
@@ -55,13 +55,13 @@ public class Map implements Observer<String>{
 	public void update(String data) {
 		if(data.contains("north") || data.contains("east") || data.contains("west")) {
 		if (data.contains("north")) {
-			loc =  new DiningHall();
+			loc =  dininghall;
 			}
 		else if (data.contains("east")) {
-			loc = new PotionsClass();
+			loc = potionsclass;
 		}
 		else if (data.contains("west")) {
-			loc =  new Library();
+			loc =  library;
 	}
 		updateMap(harry,loc);
 		Person p = loc.present();
@@ -70,5 +70,9 @@ public class Map implements Observer<String>{
 		harry.interact(p);
 		remove(p,loc);
 	}
+		else if(data.contains("leaving")) {
+			loc = entrance;
+			updateMap(harry,loc);
+		}
 }
 }
