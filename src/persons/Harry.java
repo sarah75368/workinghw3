@@ -31,6 +31,7 @@ public class Harry extends Subject<State<Harry>> implements Runnable, Person, Ap
 			System.out.println("I found Hermione!");
 		else
 			attack();
+		person.s
 	}
 	@Override
 	public void setState(State<Harry> state) {

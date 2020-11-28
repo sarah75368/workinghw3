@@ -17,7 +17,7 @@ public abstract class Potion{
 		Stir();
 		Heat();
 		WaveWand();
-		System.out.println("You now have 1 flasks of " +name);
+		System.out.println("You now have " +counter + " flasks of " +name);
 	}
 
 	protected void Heat() {

@@ -66,9 +66,11 @@ public class Map implements Observer<String>{
 		updateMap(harry,loc);
 		Person p = loc.present();
 		loc.look();
+		if(!map.containsKey(p)) {
 		p.interact(harry);
 		harry.interact(p);
 		remove(p,loc);
+		}
 	}
 		else if(data.contains("leaving")) {
 			loc = entrance;

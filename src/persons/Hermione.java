@@ -14,13 +14,13 @@ public class Hermione implements Person, Runnable, Observer<State<Harry>>{
 	boolean CanBeFound = false;
 	public Hermione(){}
 	public void interact(Person person) {
-		if(person.getClass() == Harry.class && CanBeFound)
-			found = true;
-			System.out.println("Harry I am here!");		
+		if(CanBeFound)
+			found = true;	
 	}
 	@Override
 	public void run() {
 		while(!found) {}
+		System.out.println("Harry I am here!");	
 	}
 	@Override
 	public void update(State<Harry> data) {
