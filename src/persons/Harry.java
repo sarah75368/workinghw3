@@ -124,5 +124,4 @@ public class Harry extends Subject<State<Harry>> implements Runnable, Person, Co
 public boolean hasMap() {
 	return hasMap;
 }
-
 }

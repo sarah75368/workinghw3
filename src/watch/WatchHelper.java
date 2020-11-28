@@ -1,5 +1,4 @@
 package watch;
-
 import java.util.TimerTask;
 
 class WatchHelper extends TimerTask {

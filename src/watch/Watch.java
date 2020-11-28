@@ -1,9 +1,10 @@
 package watch;
 import java.util.*;
-import runtime.*;
+import runtime.Main;
+
 public class Watch implements Runnable {
 	protected static Main obj;
-	public int warnings = 0;
+	int warnings = 0;
 	boolean caught = false;
 	boolean timeisup = false;
 
@@ -16,7 +17,7 @@ public class Watch implements Runnable {
 		return timeisup;
 	}
 
-	void warning() {
+	public void warning() {
 		try {
 			System.out.println("Hide map contents before someone sees you!");
 			Thread.sleep(10 * 1000);
@@ -46,7 +47,7 @@ public class Watch implements Runnable {
 				e.printStackTrace();
 			}
 			while (!caught)
-				// counting the number of minutes that have passed
+				// counting the number of minutes that have passrd
 				if (warnings < 5) {
 					warnings++;
 				} else
