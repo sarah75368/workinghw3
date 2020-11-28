@@ -36,6 +36,7 @@ public class Harry extends Subject<Harry> implements Person, Context<Harry>, Obs
 	int ppotions = 0;
 	int ipotions = 0;
 	Reader reader= new Reader();
+	public boolean attacksuccess = false;
 	//boolean hasMap;
 	boolean completed = false;
 	private static Harry instance;
@@ -61,9 +62,13 @@ public class Harry extends Subject<Harry> implements Person, Context<Harry>, Obs
 		else {
 			villian = (Villian) person;
 			attack();
+			if(attacksuccess) {
 			villian.setState(new Dead());
 			villian.getstate().printStatus(villian.name);
 		}
+			else
+				System.out.println("You ran away");
+	}
 	}
 	@Override
 	public void setState(State<Harry> state) {
@@ -82,14 +87,21 @@ public class Harry extends Subject<Harry> implements Person, Context<Harry>, Obs
 	void attack() {
 		String input = reader.nextLine();
 		input = input.toLowerCase();
-		if(input.contains("expecto patronum"))
+		if(input.contains("expecto patronum")) {
 			cp.order(0);
-		else if(input.contains("expelliarmus"))
+		attacksuccess = true;}
+		else if(input.contains("expelliarmus")) {
 			cp.order(1);
-		else if(input.contains("protego"))
+			attacksuccess = true;
+		}
+		else if(input.contains("protego")) {
 			cp.order(2);
-		else if(input.contains("stupefy"))
+			attacksuccess = true;
+		}
+		else if(input.contains("stupefy")) {
 			cp.order(3);
+			attacksuccess = true;
+		}
 	}
 	public void StartWatch() {
 		w = new Watch1();	

@@ -13,8 +13,7 @@ public class PotionsClass extends Location{
 		super("Potions Classroom");
 	}
 	public void look() {
-		System.out.println("Potions is one of the core subjects that first year students are required to study. "
-				+ "\nIn the potions class there is Professor Snape who teaches the subject.\n");
+		System.out.println("Potions is one of the core subjects that first year students are required to study.");
 	}
 	public Person present() {
 		return v;

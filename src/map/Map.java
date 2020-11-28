@@ -2,7 +2,6 @@ package map;
 
 import java.util.HashMap;
 import java.util.Iterator;
-
 import common.Console;
 import common.Observer;
 import common.Subject;
@@ -81,10 +80,22 @@ public class Map extends Subject<Map> implements Observer<String>{
 		if(getPerson(p) !=null) {
 		p.interact(harry);
 		harry.interact(p);
+		if(harry.attacksuccess) {
 		remove(p);
 		}
+		else {
+			loc = entrance;
+			updateMap(harry,loc);
+			loc.look();
+		}
+		if(loc instanceof Library) {
+			p = loc.present();
+			p.interact(harry);
+			harry.interact(p);
+		}
 	}
-		else if(data.contains("leaving")) {
+}
+	if(data.contains("leaving")) {
 			loc = entrance;
 			updateMap(harry,loc);
 			loc.look();
