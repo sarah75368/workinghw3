@@ -26,6 +26,5 @@ public class InvisibilityPotion extends Potion{
 
 	public void DrinkPotion(Context<Harry> state) {
 		state.setState(new Invisible());
-		state.getState().printStatus("invisibilite");
 	}
 }

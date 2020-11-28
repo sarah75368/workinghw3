@@ -1,13 +1,26 @@
 package persons;
 
-import spells.*;
-import common.*;
-import potions.*;
-import states.*;
+import common.Context;
+import common.Observer;
+import common.Reader;
+import common.Subject;
+import locations.Location;
+import potions.InvisibilityPotion;
+import potions.PolyjuicePotion;
+import potions.Potion;
+import spells.Command;
+import spells.ControlPanel;
+import spells.ExpectoPatronum;
+import spells.Expelliarmus;
+import spells.Protego;
+import spells.Stupefy;
+import spells.Wand;
+import states.Changed;
+import states.Dead;
+import states.Invisible;
+import states.State;
 import watch.*;
-import locations.*;
-import map.Map;
-public class Harry extends Subject<State<Harry>> implements Runnable, Person, Context<Harry>, Observer<String> {
+public class Harry extends Subject<Harry> implements Person, Context<Harry>, Observer<String> {
 	
 	Wand wand = new Wand();
 	ExpectoPatronum exp = new ExpectoPatronum(wand);
@@ -16,19 +29,20 @@ public class Harry extends Subject<State<Harry>> implements Runnable, Person, Co
 	Stupefy s = new Stupefy(wand);
 	Command[] cmds = {exp, ex, p, s};
 	ControlPanel cp = new ControlPanel(cmds);
-	Watch w;
+	Watch1 w;
 	State<Harry> state;
 	Location l;
 	Villian villian;
 	int ppotions = 0;
 	int ipotions = 0;
 	Reader reader= new Reader();
-	boolean hasMap;
+	//boolean hasMap;
+	boolean completed = false;
 	private static Harry instance;
 	public Harry() {
-		addObserver(new Hermione());
-		Thread t = new Thread(this);
-		t.start();
+		addObserver(Hermione.getInstance());
+	//	Thread t = new Thread(this);
+	//	t.start();
 	}
 
 	public static synchronized Harry getInstance(){
@@ -39,17 +53,18 @@ public class Harry extends Subject<State<Harry>> implements Runnable, Person, Co
 		}
 	@Override
 	public void interact(Person person) {
-		if(person.getClass() == Hermione.class) {
+		if(person instanceof Hermione) {
 			Hermione her = (Hermione) person;
 			if(her.found)
 			System.out.println("I found Hermione!");
 		}
-		else
+		else {
 			villian = (Villian) person;
 			attack();
 			villian.setState(new Dead());
 			villian.getstate().printStatus(villian.name);
 		}
+	}
 	@Override
 	public void setState(State<Harry> state) {
 		this.state = state;
@@ -57,6 +72,12 @@ public class Harry extends Subject<State<Harry>> implements Runnable, Person, Co
 	@Override
 	public State<Harry> getState() {
 		return state;
+	}
+	public void setLocation(Location l) {
+		this.l = l;
+	}
+	public Location getLocation() {
+		return l;
 	}
 	void attack() {
 		String input = reader.nextLine();
@@ -70,58 +91,44 @@ public class Harry extends Subject<State<Harry>> implements Runnable, Person, Co
 		else if(input.contains("stupefy"))
 			cp.order(3);
 	}
-	@Override
-	public void run() {
-		w = new Watch();	
-		while(true) {
-		if(ppotions == 2 || ipotions ==2)
-		notifyObservers(getState());		
-	}
+	public void StartWatch() {
+		w = new Watch1();	
 	}
 	@Override
 	public void update(String data) {
-		Potion p;
 		if(data.contains("make")) {
+			Potion p;
 			if(data.contains("polyjuice")) {
 				p = new PolyjuicePotion();
 				p.PreparePotion();
 				ppotions++;
+				System.out.println("You now have " +ppotions + " flasks of Polyjuice Potion");
 				if(ppotions ==2) {
 				state = new Changed();
 				setState(state);
-				}
-				System.out.println("You now have " +ppotions + " flasks of Polyjuice Potion");
+				notifyObservers(this);
+			}
 			}
 			else if(data.contains("invisibility")) {
 				p = new InvisibilityPotion();
 				p.PreparePotion();
 				ipotions++;
-				if(ipotions ==2) {
+				System.out.println("You now have " +ipotions + " flasks of Invisibility Potion");
+				if(ipotions == 2) {
 				state = new Invisible();
 				setState(state);
-				}
-				System.out.println("You now have " +ipotions + " flasks of Invisibility Potion");
+				notifyObservers(this);
 			}
+		}
 	}
 		else if(data.contains("mischief managed")) {
 			end(data);
 		}
-			
-		}
-		public void end(String data) {
-		while (!data.contains("mischief managed") && !w.timeIsUp()) {
-			System.out.println("Try again!");
-			data = reader.nextLine();
-		}
-		if (data.contains("mischief managed")) {
-			hasMap = false;
-			System.out.println("Hiding map contents...end.");
-		}
-	if (!hasMap) {
-		System.exit(0);
 	}
-		}
-public boolean hasMap() {
-	return hasMap;
+		public void end(String data) {
+			System.out.println("Hiding map contents...end.");
+
+		System.exit(0);
 }
+
 }

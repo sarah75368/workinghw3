@@ -27,7 +27,8 @@ public abstract class Subject<Type> {
 
 	        for (Observer<Type> obs : toNotify) {
 	            obs.update( data);
-	        }	    }
+	        }	    
+	        }
 	    
 	    /*Method to remove observers from list*/
 	    public void removeObserver(Observer<Type> obs) {

@@ -9,27 +9,29 @@ import states.Dead;
 import states.Invisible;
 import states.State;
 
-public class Hermione implements Person, Runnable, Observer<State<Harry>>{
+public class Hermione implements Person, Observer<Harry>{
 
 	//Location l;
 	boolean found = false;
 	boolean CanBeFound = false;
-	Harry state;
-	public Hermione(){}
-	public void interact(Person person) {
-		if(CanBeFound)
-			found = true;	
+	private static Hermione instance;
+	private Hermione(){
 	}
-	@Override
-	public void run() {
-		while(!found) {}
-		System.out.println("Harry I am here!");	
-	}
-	@Override
-	public void update(State<Harry> data) {
-		state = (Harry) data;
-		if(state.getState() instanceof Changed || state.getState() instanceof Invisible) {
-			CanBeFound = true;
+	public static synchronized Hermione getInstance(){
+		if(instance == null){
+		instance = new Hermione();
 		}
+		 return instance;
+		}
+	public void interact(Person person) {
+		if(found) {
+			System.out.println("Harry I am here!");	
+	}
+}
+	@Override
+	public void update(Harry data) {
+			if(data.getState() instanceof Changed || data.getState() instanceof Invisible) {
+			found = true;
+			}
 	}
 }

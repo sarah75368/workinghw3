@@ -5,7 +5,7 @@ import states.Alive;
 
 public class Library extends Location {
 	Villian villian = new Draco();
-	Person h = (Hermione) new Hermione();
+	Person h = Hermione.getInstance();
 	public Library() {
 		super("Library");
 	}

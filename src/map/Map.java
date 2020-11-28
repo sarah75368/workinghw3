@@ -9,10 +9,10 @@ import common.Subject;
 import locations.*;
 import persons.*;
 
-public class Map implements Observer<String>{
+public class Map extends Subject<Map> implements Observer<String>{
 
 	HashMap<Person,Location> map = new HashMap<Person,Location>();
-	Hermione hermione = new Hermione();
+	Hermione hermione = Hermione.getInstance();
 	Library library = new Library();
 	Villian snape = new Snape();
 	PotionsClass potionsclass = new PotionsClass();

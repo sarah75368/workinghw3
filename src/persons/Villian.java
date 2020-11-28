@@ -6,7 +6,6 @@ import states.State;
 
 public abstract class Villian implements Person, Context<Villian> {
 	String name;
-	boolean defeated;
 	State<Villian> state;
 	Villian(String name) {
 		this.name = name;

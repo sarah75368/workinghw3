@@ -22,7 +22,6 @@ public class PolyjuicePotion extends Potion {
 	@Override
 	public void DrinkPotion(Context<Harry> state) {
 		state.setState(new Changed());	
-		state.getState().printStatus("polyjuice");
 	}
 
 
