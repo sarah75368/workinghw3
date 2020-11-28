@@ -3,7 +3,6 @@ package locations;
 import persons.*;
 
 public class Library extends Location {
-	Person p = new Hermione();
 	Person v = new Draco();
 	
 	public Library() {

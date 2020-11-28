@@ -2,9 +2,11 @@ package locations;
 
 import persons.Bellatrix;
 import persons.Person;
+import persons.Villian;
+import states.Dead;
 
 public class DiningHall extends Location{
-	Person v = new Bellatrix();
+	Villian v = new Bellatrix();
 	public DiningHall() {
 		super("Dining Hall");}
 

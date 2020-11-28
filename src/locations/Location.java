@@ -35,10 +35,8 @@ public abstract class Location {
 	public Person present() {
 		return P;
 	}
-	public void greeting() {
-		System.out.println("You enter the " + room);
-	}
 	public void look() {
+		System.out.println("You enter the " + room);
 		System.out.println("You look around the "+room);
 	}
 	public static boolean useList(String[] arr, String targetValue) {

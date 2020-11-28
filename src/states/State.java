@@ -1,7 +1,8 @@
 package states;
 
-import common.Appearance;
+import common.Context;
 
-public interface State<C extends Appearance<C>> {
-    void printStatus();
+public interface State<C extends Context<C>> {
+    void printStatus(String name);
+    
 }

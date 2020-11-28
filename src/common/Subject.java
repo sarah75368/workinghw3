@@ -26,7 +26,7 @@ public abstract class Subject<Type> {
 	        }
 
 	        for (Observer<Type> obs : toNotify) {
-	            obs.update(data);
+	            obs.update( data);
 	        }
 	    }
 	    

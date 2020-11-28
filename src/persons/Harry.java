@@ -6,7 +6,7 @@ import potions.*;
 import states.*;
 import watch.*;
 import locations.*;
-public class Harry extends Subject<State<Harry>> implements Runnable, Person, Appearance<Harry>, Observer<String> {
+public class Harry extends Subject<State<Harry>> implements Runnable, Person, Context<Harry>, Observer<String> {
 	
 	Wand wand = new Wand();
 	ExpectoPatronum exp = new ExpectoPatronum(wand);
@@ -18,6 +18,7 @@ public class Harry extends Subject<State<Harry>> implements Runnable, Person, Ap
 	Watch w;
 	State<Harry> state;
 	Location l;
+	Villian villian;
 	int ppotions = 0;
 	int ipotions = 0;
 	Reader reader= new Reader();
@@ -26,13 +27,16 @@ public class Harry extends Subject<State<Harry>> implements Runnable, Person, Ap
 		Thread t = new Thread(this);
 		t.start();
 	}
+	@Override
 	public void interact(Person person) {
 		if(person.getClass() == Hermione.class)
 			System.out.println("I found Hermione!");
 		else
+			villian = (Villian) person;
 			attack();
-		person.s
-	}
+			villian.setState(new Dead());
+			villian.getstate().printStatus(villian.name);
+		}
 	@Override
 	public void setState(State<Harry> state) {
 		this.state = state;
@@ -57,8 +61,7 @@ public class Harry extends Subject<State<Harry>> implements Runnable, Person, Ap
 	public void run() {
 		w = new Watch();
 		if(ppotions == 2 || ipotions ==2)	
-		notifyObservers(getState());
-		
+		notifyObservers(getState());		
 	}
 	@Override
 	public void update(String data) {
@@ -70,6 +73,7 @@ public class Harry extends Subject<State<Harry>> implements Runnable, Person, Ap
 				ppotions++;
 				state = new Changed();
 				setState(state);
+				System.out.println("You now have " +ppotions + " flasks of Polyjuice Potion");
 			}
 			else if(data.contains("invisibility")) {
 				p = new InvisibilityPotion();
@@ -77,6 +81,7 @@ public class Harry extends Subject<State<Harry>> implements Runnable, Person, Ap
 				ipotions++;
 				state = new Invisible();
 				setState(state);
+				System.out.println("You now have " +ipotions + " flasks of Invisibility Potion");
 			}
 	}
 	}

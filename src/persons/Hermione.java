@@ -1,17 +1,20 @@
 package persons;
 
+import common.Context;
 import common.Observer;
 import locations.*;
 import map.Map;
 import states.Changed;
+import states.Dead;
 import states.Invisible;
 import states.State;
 
 public class Hermione implements Person, Runnable, Observer<State<Harry>>{
 
-	Location l;
+	//Location l;
 	boolean found = false;
 	boolean CanBeFound = false;
+	Harry state;
 	public Hermione(){}
 	public void interact(Person person) {
 		if(CanBeFound)
@@ -24,7 +27,8 @@ public class Hermione implements Person, Runnable, Observer<State<Harry>>{
 	}
 	@Override
 	public void update(State<Harry> data) {
-		if(data.getClass() == Changed.class || data.getClass() == Invisible.class) {
+		state = (Harry) data;
+		if(state.getState().equals(new Changed()) || state.getState().equals(new Invisible())) {
 			CanBeFound = true;
 		}
 	}

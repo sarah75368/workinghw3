@@ -1,27 +1,23 @@
 package persons;
 
+import states.*;
+import states.State;
 
-public class Bellatrix implements Villian {
+public class Bellatrix extends Villian {
 
 	boolean defeated = false;
 	String name = "Bellatrix";
-	public Bellatrix() {}
-	
+	public Bellatrix() {
+		super("Bellatrix");
+		state = new Alive();
+	}
 	public void interact(Person person) {
-		if(person.getClass() == Harry.class)
+		if(person.getClass() == Harry.class) {
 		System.out.println(name + ": Well well if it isn't Harry Potter, get ready to fight for your life!");
-		
+		}			
 	}
-
 	@Override
-	public void setdefeat(boolean defeated) {
-		this.defeated = defeated;
-		
-	}
-
-	@Override
-	public boolean getdefeat() {
-		// TODO Auto-generated method stub
-		return defeated;
+	public State<Villian> getState() {
+		return state;
 	}
 }

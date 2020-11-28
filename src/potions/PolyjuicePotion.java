@@ -1,6 +1,6 @@
 package potions;
 
-import common.Appearance;
+import common.Context;
 import persons.Harry;
 import states.Changed;
 public class PolyjuicePotion extends Potion {
@@ -20,10 +20,9 @@ public class PolyjuicePotion extends Potion {
 	}
 
 	@Override
-	public void DrinkPotion(Appearance<Harry> state) {
-		counter++;
+	public void DrinkPotion(Context<Harry> state) {
 		state.setState(new Changed());	
-		state.getState().printStatus();
+		state.getState().printStatus("polyjuice");
 	}
 
 

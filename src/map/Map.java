@@ -2,7 +2,10 @@ package map;
 
 import java.util.HashMap;
 import java.util.Iterator;
+
+import common.Console;
 import common.Observer;
+import common.Subject;
 import locations.*;
 import persons.*;
 
@@ -11,10 +14,10 @@ public class Map implements Observer<String>{
 	HashMap<Person,Location> map = new HashMap<Person,Location>();
 	Hermione hermione = new Hermione();
 	Library library = new Library();
-	Snape snape = new Snape();
+	Villian snape = new Snape();
 	PotionsClass potionsclass = new PotionsClass();
-	Draco draco = new Draco();
-	Bellatrix bellatrix = new Bellatrix();
+	Villian draco = new Draco();
+	Villian bellatrix = new Bellatrix();
 	DiningHall dininghall = new DiningHall();
 	Location loc;
 	Harry harry = new Harry();
@@ -41,15 +44,24 @@ public class Map implements Observer<String>{
 	public Location getLocation(Person person) {
 		return map.get(person);
 	}
-	public void remove(Person person, Location location) {
+	public void remove(Person person) {
 		Iterator<Person> iterator = map.keySet().iterator(); 
 		while(iterator.hasNext()){
 			Person p = iterator.next();
 			if(p.getClass() == person.getClass()){ 
 				iterator.remove(); 
-				}
-
+			}
 		}
+	}
+	public Person getPerson(Person person) {
+		Iterator<Person> iterator = map.keySet().iterator(); 
+		while(iterator.hasNext()){
+			Person p = iterator.next();
+			if(p.getClass() == person.getClass()){ 
+				return person; 
+			}
+		}
+		return null;
 	}
 	@Override
 	public void update(String data) {
@@ -64,17 +76,18 @@ public class Map implements Observer<String>{
 			loc =  library;
 	}
 		updateMap(harry,loc);
-		Person p = loc.present();
 		loc.look();
-		if(!map.containsKey(p)) {
+		Person p = loc.present();
+		if(getPerson(p) !=null) {
 		p.interact(harry);
 		harry.interact(p);
-		remove(p,loc);
+		remove(p);
 		}
 	}
 		else if(data.contains("leaving")) {
 			loc = entrance;
 			updateMap(harry,loc);
+			loc.look();
 		}
 }
 }

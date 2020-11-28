@@ -1,23 +1,21 @@
 package potions;
 
-import common.Appearance;
+import common.Context;
 import persons.Harry;
 
 public abstract class Potion{
 
 	String name;
-	int counter = 0;
-	Potion(String name) {
+	public Potion(String name) {
 		this.name = name;
 	}
-	public abstract void DrinkPotion(Appearance<Harry> state);
+	public abstract void DrinkPotion(Context<Harry> state);
 	public final void PreparePotion() {
 
 		AddIngredients();
 		Stir();
 		Heat();
 		WaveWand();
-		System.out.println("You now have " +counter + " flasks of " +name);
 	}
 
 	protected void Heat() {

@@ -1,11 +1,15 @@
 package persons;
 
+import states.*;
 
-public class Draco implements Villian {
+public class Draco extends Villian {
 
 	boolean defeated = false;
 	String name = "Draco Malfoy";
-	public Draco() {}
+	public Draco() {
+		super("Draco Malfoy");
+		state = new Alive();
+	}
 	
 	public void interact(Person person) {
 		if(person.getClass() == Harry.class)
@@ -14,14 +18,7 @@ public class Draco implements Villian {
 	}
 
 	@Override
-	public void setdefeat(boolean defeated) {
-		this.defeated = defeated;
-		
-	}
-
-	@Override
-	public boolean getdefeat() {
-		// TODO Auto-generated method stub
-		return defeated;
+	public State<Villian> getState() {
+		return state;
 	}
 }

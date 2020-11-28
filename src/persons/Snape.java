@@ -1,10 +1,13 @@
 package persons;
-
-public class Snape implements Villian {
+import states.*;
+import states.State;
+public class Snape extends Villian {
 
 	boolean defeated = false;
 	String name = "Snape";
-	public Snape() {}
+	public Snape() {super("Snape");
+		state = new Alive();
+	}
 	
 	public void interact(Person person) {
 		if(person.getClass() == Harry.class)
@@ -13,13 +16,10 @@ public class Snape implements Villian {
 	}
 
 	@Override
-	public void setdefeat(boolean defeated) {
-		this.defeated = defeated;
-		
+	public State<Villian> getState() {
+		return state;
 	}
-
-	@Override
-	public boolean getdefeat() {
-		return defeated;
-	}
+	  public void setState(State<Villian> state) {
+	    	this.state = state;
+	    }
 }

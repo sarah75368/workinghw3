@@ -21,14 +21,10 @@ public class Entrance extends Location {
 			}
 	}
 		@Override
-		public void greeting(){
+		public void look(){
 				System.out.println("\nYou have arrived back at the Entrance"
 						+ "\nThe door on the north wall leads to the dining hall, "
 						+ "\nthe door to the east leads to the Potions class, \nand the door to the west leads to the Library.");
 			}
-		@Override
-		public void look() {
-			System.out.print("");
-		}
 		
 }

@@ -1,6 +1,6 @@
 package potions;
 
-import common.Appearance;
+import common.Context;
 import persons.Harry;
 import states.Invisible;
 import states.State;
@@ -24,10 +24,8 @@ public class InvisibilityPotion extends Potion{
 	protected void WaveWand() {
 	}
 
-	public void DrinkPotion(Appearance<Harry> state) {
-		counter++;
+	public void DrinkPotion(Context<Harry> state) {
 		state.setState(new Invisible());
-		state.getState().printStatus();
+		state.getState().printStatus("invisibilite");
 	}
-
 }
