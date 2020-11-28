@@ -5,11 +5,11 @@ import map.Map;
 import persons.Harry;
 public class Console extends Subject<String> implements Runnable{
 	Reader reader = new Reader();
-	boolean flag;
+	boolean flag = true;
 	String input;
 	Map map = Map.getInstance();
-	Harry harry = new Harry();
-	String [] commands = { "leave", "exit", "walk", "expelliarmus","expecto patronum","protego","stupefy","make"};
+	Harry harry = Harry.getInstance();
+	String [] commands = { "leave", "exit", "walk", "expelliarmus","expecto patronum","protego","stupefy","make","mischief managed"};
 	String [] move = {"leave", "exit","get out"};
 	String [] locations = {"north","east","west"};
 	public Console(){
@@ -38,15 +38,14 @@ public class Console extends Subject<String> implements Runnable{
 	}
 	public synchronized String input() {
 		input = reader.nextLine();
-		while(!useList(commands,input)) {
+		while(!validCommand(commands,input)) {
 			System.out.println("That is not a valid command!");
 			input = reader.nextLine();
 		}
-//		if(countWords(input) == 1)
-//		if(useList(move,input) && !validlocation(locations,input)) {
+		if(validCommand(move,input) && !validDirection(locations,input)) {
 //			System.out.println("You cannot go there!");
-//		}
-		if(leaving(move,input)) {
+		}
+		if(validCommand(move,input)) {
 			input = "leaving";
 		}
 		if(input.contains("mischief managed")) {
@@ -59,12 +58,12 @@ public class Console extends Subject<String> implements Runnable{
 	 * helper functions*
 	 * 
 	 * */
-	public static boolean useList(String[] arr, String targetValue) {
+	public static boolean validCommand(String[] arr, String targetValue) {
+		return Arrays.asList(arr).contains(targetValue);
+	}
+	public static boolean validDirection(String[] arr, String targetValue) {
 		String[] temp = targetValue.split(" ");
 		return Arrays.asList(arr).contains(temp[0]);
-	}
-	public static boolean leaving(String[] arr, String targetValue) {
-		return Arrays.asList(arr).contains(targetValue);
 	}
 	  public static int 
       countWords(String str) 
@@ -76,7 +75,7 @@ public class Console extends Subject<String> implements Runnable{
     } 
 	public void run() {
 		welcome();
-		while(true) {
+		while(flag) {
 			input = input();
 			notifyObservers(input);
 		}

@@ -6,6 +6,7 @@ import potions.*;
 import states.*;
 import watch.*;
 import locations.*;
+import map.Map;
 public class Harry extends Subject<State<Harry>> implements Runnable, Person, Context<Harry>, Observer<String> {
 	
 	Wand wand = new Wand();
@@ -22,11 +23,20 @@ public class Harry extends Subject<State<Harry>> implements Runnable, Person, Co
 	int ppotions = 0;
 	int ipotions = 0;
 	Reader reader= new Reader();
+	boolean hasMap;
+	private static Harry instance;
 	public Harry() {
 		addObserver(new Hermione());
 		Thread t = new Thread(this);
 		t.start();
 	}
+
+	public static synchronized Harry getInstance(){
+		if(instance == null){
+		instance = new Harry();
+		}
+		 return instance;
+		}
 	@Override
 	public void interact(Person person) {
 		if(person.getClass() == Hermione.class) {
@@ -64,7 +74,7 @@ public class Harry extends Subject<State<Harry>> implements Runnable, Person, Co
 	public void run() {
 		w = new Watch();	
 		while(true) {
-		if(ppotions == 2 || ipotions ==2)	
+		if(ppotions == 2 || ipotions ==2)
 		notifyObservers(getState());		
 	}
 	}
@@ -93,5 +103,26 @@ public class Harry extends Subject<State<Harry>> implements Runnable, Person, Co
 				System.out.println("You now have " +ipotions + " flasks of Invisibility Potion");
 			}
 	}
+		else if(data.contains("mischief managed")) {
+			end(data);
+		}
+			
+		}
+		public void end(String data) {
+		while (!data.contains("mischief managed") && !w.timeIsUp()) {
+			System.out.println("Try again!");
+			data = reader.nextLine();
+		}
+		if (data.contains("mischief managed")) {
+			hasMap = false;
+			System.out.println("Hiding map contents...end.");
+		}
+	if (!hasMap) {
+		System.exit(0);
 	}
+		}
+public boolean hasMap() {
+	return hasMap;
+}
+
 }
